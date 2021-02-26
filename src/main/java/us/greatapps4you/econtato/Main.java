@@ -17,6 +17,8 @@ public class Main {
 
         if (args.length == 0) {
             System.out.println("!!! Informe o arquivo csv");
+            System.out.println();
+            System.out.println();
             return;
         }
 
@@ -24,6 +26,8 @@ public class Main {
 
         if (!new File(csvFile).exists()) {
             System.out.println("!!! Arquivo não encontrado: " + csvFile);
+            System.out.println();
+            System.out.println();
             return;
         }
 
@@ -33,12 +37,16 @@ public class Main {
             googleCsv = GoogleCsvService.generate(csvFile);
         } catch (Exception e) {
             System.out.println("!!! O arquivo csv deve conter tres colunas: NOME | CURSO | TELEFONE");
+            System.out.println();
+            System.out.println();
             return;
         }
 
         if (googleCsv == null) {
             System.out.println("!!! O arquivo " + csvFile
                     + " não pôde ser lido.");
+            System.out.println();
+            System.out.println();
             return;
         }
 
@@ -47,6 +55,8 @@ public class Main {
             System.out.println("Arquivo " +
                     googleCsvFile +
                     " salvo com sucesso!");
+            System.out.println();
+            System.out.println();
 
         } catch (Exception e) {
             System.out.println("!!! O arquivo " + csvFile
