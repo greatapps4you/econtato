@@ -1,43 +1,46 @@
 package us.greatapps4you.econtato;
 
-import com.opencsv.bean.CsvToBeanBuilder;
-import us.greatapps4you.econtato.entities.Student;
+import us.greatapps4you.econtato.services.GoogleCsvService;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.List;
+import java.io.File;
 
 public class Main {
-    private static String csvHeader = "Name,Given Name,Additional Name,Family Name,Yomi Name,Given Name Yomi,Additional Name Yomi,Family Name Yomi,Name Prefix,Name Suffix,Initials,Nickname,Short Name,Maiden Name,Birthday,Gender,Location,Billing Information,Directory Server,Mileage,Occupation,Hobby,Sensitivity,Priority,Subject,Notes,Language,Photo,Group Membership,Phone 1 - Type,Phone 1 - Value,Organization 1 - Type,Organization 1 - Name,Organization 1 - Yomi Name,Organization 1 - Title,Organization 1 - Department,Organization 1 - Symbol,Organization 1 - Location,Organization 1 - Job Description\n";
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("Informe o nome de seu arquivo csv");
+            return;
+        }
 
-        String fileName = "/Users/jose/softdev/projects/dyone/nutricao.csv";
+        String csvFile = args[0];
 
-        List<Student> students = new CsvToBeanBuilder(new FileReader(fileName))
-                .withType(Student.class)
-                .withSeparator(';')
-                .withSkipLines(1)
-                .build()
-                .parse();
+        if (!new File(csvFile).exists()) {
+            System.out.println("Arquivo não encontrado: " + csvFile);
+            return;
+        }
 
-        System.out.print(csvHeader);
+        String googleCsv;
 
-        students.forEach(s -> {
-            System.out.println(toGoogleCsv(s));
-        });
+        try {
+            googleCsv = GoogleCsvService.generate(csvFile);
+        } catch (Exception e) {
+            System.out.println("O arquivo csv deve conter tres colunas: NOME | CURSO | TELEFONE");
+            return;
+        }
 
-    }
+        if (googleCsv == null) {
+            System.out.println("O arquivo " + csvFile
+                    + " não pôde ser lido.");
+            return;
+        }
 
-    private static String toGoogleCsv(Student student) {
+        try {
+            GoogleCsvService.write(googleCsv);
+        } catch (Exception e) {
+            System.out.println("O arquivo " + csvFile
+                    + " foi lido, mas o resultado não pôde ser salvo. " +
+                    "Verifique se tem permissão para salvar arquivos neste diretório.");
 
-        String googleCsv =
-                student.getName()
-                        + ",,,,,,,,,,,,,,,,,,,,,,,,,,,,* myContacts,Mobile," +
-                        student.getPhone() +
-                        ",unknown,,," +
-                        student.getCourse() +
-                        ",,,,";
-        return googleCsv;
+        }
     }
 }
