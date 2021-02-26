@@ -39,13 +39,14 @@ public class GoogleCsvService {
         return googleCsv;
     }
 
-    public static void write(String googleCsv)
+    public static String write(String googleCsv)
             throws IOException {
         String googleCsvFile = LocalDateTime.now() + "_google.csv";
         FileOutputStream outputStream = new FileOutputStream(googleCsvFile);
         byte[] strToBytes = googleCsv.getBytes();
         outputStream.write(strToBytes);
         outputStream.close();
+        return googleCsvFile;
     }
 
 }
