@@ -7,6 +7,14 @@ import java.io.File;
 public class Main {
 
     public static void main(String[] args) {
+        System.out.println("____________________________");
+        System.out.println("| GreatApps4you LLC        |");
+        System.out.println("| All rights reserved      |");
+        System.out.println("| Copyright 2021           |");
+        System.out.println("| https://greatapps4you.us |");
+        System.out.println("|__________________________|");
+        System.out.println();
+
         if (args.length == 0) {
             System.out.println("Informe o arquivo csv");
             return;
