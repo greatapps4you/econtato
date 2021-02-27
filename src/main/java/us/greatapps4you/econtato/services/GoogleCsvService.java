@@ -44,7 +44,7 @@ public class GoogleCsvService {
             throws IOException {
         String googleCsvFile = "google_" + UUID.randomUUID() + "__.csv";
         try(FileOutputStream outputStream = new FileOutputStream(googleCsvFile);) {
-            byte[] strToBytes = googleCsv.getBytes(StandardCharsets.UTF_8);
+            byte[] strToBytes = googleCsv.getBytes(StandardCharsets.ISO_8859_1);
             outputStream.write(strToBytes);
         }
         return googleCsvFile;
