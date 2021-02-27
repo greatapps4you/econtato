@@ -62,6 +62,7 @@ public class Main {
             System.out.println("!!! O arquivo " + csvFile
                     + " foi lido, mas o resultado não pôde ser salvo. " +
                     "Verifique se tem permissão para salvar arquivos neste diretório.");
+            e.printStackTrace();
 
         }
     }
