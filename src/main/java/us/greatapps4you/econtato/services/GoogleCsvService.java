@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,10 +43,10 @@ public class GoogleCsvService {
     public static String write(String googleCsv)
             throws IOException {
         String googleCsvFile = "google_" + UUID.randomUUID() + "__.csv";
-        FileOutputStream outputStream = new FileOutputStream(googleCsvFile);
-        byte[] strToBytes = googleCsv.getBytes();
-        outputStream.write(strToBytes);
-        outputStream.close();
+        try(FileOutputStream outputStream = new FileOutputStream(googleCsvFile);) {
+            byte[] strToBytes = googleCsv.getBytes(StandardCharsets.UTF_8);
+            outputStream.write(strToBytes);
+        }
         return googleCsvFile;
     }
 
